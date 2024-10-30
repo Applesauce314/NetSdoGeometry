@@ -1,8 +1,8 @@
+using Oracle.ManagedDataAccess.Types;
+
 namespace NetSdoGeometry
 {
     using System;
-    using Oracle.DataAccess.Client;
-    using Oracle.DataAccess.Types;
 
     [Serializable]
     [OracleCustomTypeMappingAttribute("MDSYS.SDO_POINT_TYPE")]

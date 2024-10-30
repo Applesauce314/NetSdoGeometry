@@ -1,8 +1,9 @@
+using Oracle.ManagedDataAccess.Types;
+
 namespace NetSdoGeometry
 {
     using System;
     using System.Text;
-    using Oracle.DataAccess.Types;
 
     [Serializable]
     [OracleCustomTypeMappingAttribute("MDSYS.SDO_GEOMETRY")]
@@ -13,7 +14,7 @@ namespace NetSdoGeometry
 
         [OracleObjectMappingAttribute(1)]
         public decimal? SdoSRID { get; set; }
-        
+
         [OracleObjectMappingAttribute(2)]
         public SdoPoint SdoPoint { get; set; }
 
@@ -33,14 +34,14 @@ namespace NetSdoGeometry
 
         public int SdoSRIDAsInt
         {
-            get 
-            { 
-                return System.Convert.ToInt32(this.SdoSRID); 
+            get
+            {
+                return System.Convert.ToInt32(this.SdoSRID);
             }
 
-            set 
-            { 
-                this.SdoSRID = System.Convert.ToDecimal(value); 
+            set
+            {
+                this.SdoSRID = System.Convert.ToDecimal(value);
             }
         }
 
@@ -67,7 +68,7 @@ namespace NetSdoGeometry
                 {
                     int c = value.GetLength(0);
                     this.SdoElemInfo = new decimal[c];
-            
+
                     for (int k = 0; k < c; k++)
                     {
                         this.SdoElemInfo[k] = System.Convert.ToDecimal(value[k]);
@@ -131,7 +132,7 @@ namespace NetSdoGeometry
                 sb.Append(",");
                 sb.Append((this.SdoSRID != null) ? this.SdoSRID.ToString() : "null");
                 sb.Append(",");
-                
+
                 // begin point
                 if (this.SdoPoint != null)
                 {
@@ -150,7 +151,7 @@ namespace NetSdoGeometry
                 }
 
                 sb.Append(",");
-            
+
                 // begin element array
                 if (this.SdoElemInfo != null)
                 {
@@ -170,9 +171,9 @@ namespace NetSdoGeometry
                 {
                     sb.Append("null");
                 }
-                
+
                 sb.Append(",");
-                
+
                 // begin ordinates array
                 if (this.SdoOrdinates != null)
                 {
@@ -192,9 +193,9 @@ namespace NetSdoGeometry
                 {
                     sb.Append("null");
                 }
-                
+
                 sb.Append(")");
-                
+
                 return sb.ToString();
             }
         }

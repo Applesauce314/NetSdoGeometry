@@ -1,8 +1,11 @@
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
+
+using System;
+
 namespace NetSdoGeometry
 {
-    using System;
-    using Oracle.DataAccess.Client;
-    using Oracle.DataAccess.Types;
+
 
     [Serializable]
     public abstract class OracleCustomTypeBase<T> : INullable, IOracleCustomType, IOracleCustomTypeFactory

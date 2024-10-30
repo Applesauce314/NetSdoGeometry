@@ -1,38 +1,41 @@
 using Oracle.ManagedDataAccess.Types;
 
+using System;
+using System.Globalization;
+
 namespace NetSdoGeometry
 {
-    using System;
+
 
     [Serializable]
-    [OracleCustomTypeMappingAttribute("MDSYS.SDO_POINT_TYPE")]
+    [OracleCustomTypeMapping("MDSYS.SDO_POINT_TYPE")]
     public class SdoPoint : OracleCustomTypeBase<SdoPoint>
     {
-        [OracleObjectMappingAttribute("X")]
+        [OracleObjectMapping("X")]
         public decimal? X { get; set; }
 
-        [OracleObjectMappingAttribute("Y")]
+        [OracleObjectMapping("Y")]
         public decimal? Y { get; set; }
 
-        [OracleObjectMappingAttribute("Z")]
+        [OracleObjectMapping("Z")]
         public decimal? Z { get; set; }
 
         public double? XD
         {
-            get { return System.Convert.ToDouble(this.X); }
-            set { this.X = System.Convert.ToDecimal(value); }
+            get => System.Convert.ToDouble(this.X, CultureInfo.InvariantCulture);
+            set => this.X = System.Convert.ToDecimal(value, CultureInfo.InvariantCulture);
         }
 
         public double? YD
         {
-            get { return System.Convert.ToDouble(this.Y); }
-            set { this.Y = System.Convert.ToDecimal(value); }
+            get => System.Convert.ToDouble(this.Y, CultureInfo.InvariantCulture);
+            set => this.Y = System.Convert.ToDecimal(value, CultureInfo.InvariantCulture);
         }
 
         public double? ZD
         {
-            get { return System.Convert.ToDouble(this.Z); }
-            set { this.Z = System.Convert.ToDecimal(value); }
+            get => System.Convert.ToDouble(this.Z, CultureInfo.InvariantCulture);
+            set => this.Z = System.Convert.ToDecimal(value, CultureInfo.InvariantCulture);
         }
 
         public override void MapFromCustomObject()

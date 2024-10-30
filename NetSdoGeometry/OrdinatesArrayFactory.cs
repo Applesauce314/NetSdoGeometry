@@ -2,7 +2,7 @@
 
 namespace NetSdoGeometry
 {
-    [OracleCustomTypeMappingAttribute("MDSYS.SDO_ORDINATE_ARRAY")]
+    [OracleCustomTypeMapping("MDSYS.SDO_ORDINATE_ARRAY")]
     public class OrdinatesArrayFactory : OracleArrayTypeFactoryBase<decimal>
     {
     }

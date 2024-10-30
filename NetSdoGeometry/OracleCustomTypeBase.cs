@@ -2,19 +2,19 @@ using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 
 using System;
+using System.Globalization;
 
 namespace NetSdoGeometry
 {
-
 
     [Serializable]
     public abstract class OracleCustomTypeBase<T> : INullable, IOracleCustomType, IOracleCustomTypeFactory
     where T : OracleCustomTypeBase<T>, new()
     {
-        private static string errorMessageHead = "Error converting Oracle User Defined Type to .Net Type " + typeof(T).ToString() + ", oracle column is null, failed to map to . NET valuetype, column ";
+        private static readonly string _errorMessageHead = "Error converting Oracle User Defined Type to .Net Type " + typeof(T).ToString() + ", oracle column is null, failed to map to . NET valuetype, column ";
 
         [NonSerialized]
-        private OracleConnection connection;
+        private OracleConnection? connection;
 
         private object? udtObject;
 
@@ -39,15 +39,15 @@ namespace NetSdoGeometry
             return new T();
         }
 
-        public void FromCustomObject(OracleConnection connection, object udt)
+        public void FromCustomObject(OracleConnection con, object udt)
         {
-            this.SetConnectionAndPointer(connection, udt);
+            this.SetConnectionAndPointer(con, udt);
             this.MapFromCustomObject();
         }
 
-        public void ToCustomObject(OracleConnection connection, object udt)
+        public void ToCustomObject(OracleConnection con, object udt)
         {
-            this.SetConnectionAndPointer(connection, udt);
+            this.SetConnectionAndPointer(con, udt);
             this.MapToCustomObject();
         }
 
@@ -77,13 +77,14 @@ namespace NetSdoGeometry
             }
         }
 
-        protected U? GetValue<U>(string oracleColumnName)
+        protected TValue? GetValue<TValue>(string oracleColumnName)
         {
+            ArgumentNullException.ThrowIfNull(oracleColumnName);
             if (OracleUdt.IsDBNull(this.connection, this.udtObject, oracleColumnName))
             {
-                if (default(U) is ValueType)
+                if (default(TValue) is ValueType)
                 {
-                    throw new Exception(errorMessageHead + oracleColumnName.ToString() + " of value type " + typeof(U).ToString());
+                    throw new InvalidOperationException(_errorMessageHead + oracleColumnName.ToString() + " of value type " + typeof(TValue).ToString());
                 }
                 else
                 {
@@ -92,17 +93,17 @@ namespace NetSdoGeometry
             }
             else
             {
-                return (U)OracleUdt.GetValue(this.connection, this.udtObject, oracleColumnName);
+                return (TValue)OracleUdt.GetValue(this.connection, this.udtObject, oracleColumnName);
             }
         }
 
-        protected U? GetValue<U>(int oracleColumnId)
+        protected TValue? GetValue<TValue>(int oracleColumnId)
         {
             if (OracleUdt.IsDBNull(this.connection, this.udtObject, oracleColumnId))
             {
-                if (default(U) is ValueType)
+                if (default(TValue) is ValueType)
                 {
-                    throw new Exception(errorMessageHead + oracleColumnId.ToString() + " of value type " + typeof(U).ToString());
+                    throw new InvalidOperationException(_errorMessageHead + oracleColumnId.ToString(CultureInfo.InvariantCulture) + " of value type " + typeof(TValue).ToString());
                 }
                 else
                 {
@@ -111,7 +112,7 @@ namespace NetSdoGeometry
             }
             else
             {
-                return (U)OracleUdt.GetValue(this.connection, this.udtObject, oracleColumnId);
+                return (TValue)OracleUdt.GetValue(this.connection, this.udtObject, oracleColumnId);
             }
         }
     }

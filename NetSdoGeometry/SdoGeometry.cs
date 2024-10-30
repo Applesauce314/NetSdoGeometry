@@ -1,51 +1,41 @@
 using Oracle.ManagedDataAccess.Types;
 
+using System;
+using System.Globalization;
+using System.Text;
+
 namespace NetSdoGeometry
 {
-    using System;
-    using System.Text;
 
     [Serializable]
-    [OracleCustomTypeMappingAttribute("MDSYS.SDO_GEOMETRY")]
+    [OracleCustomTypeMapping("MDSYS.SDO_GEOMETRY")]
     public class SdoGeometry : OracleCustomTypeBase<SdoGeometry>
     {
-        [OracleObjectMappingAttribute(0)]
+        [OracleObjectMapping(0)]
         public decimal? SdoGtype { get; set; }
 
-        [OracleObjectMappingAttribute(1)]
+        [OracleObjectMapping(1)]
         public decimal? SdoSRID { get; set; }
 
-        [OracleObjectMappingAttribute(2)]
+        [OracleObjectMapping(2)]
         public SdoPoint? SdoPoint { get; set; }
 
-        [OracleObjectMappingAttribute(3)]
+        [OracleObjectMapping(3)]
         public decimal[]? SdoElemInfo { get; set; }
 
-        [OracleObjectMappingAttribute(4)]
+        [OracleObjectMapping(4)]
         public decimal[]? SdoOrdinates { get; set; }
 
-        public int SdoGtypeAsInt
-        {
-            get
-            {
-                return System.Convert.ToInt32(this.SdoGtype);
-            }
-        }
+        public int SdoGtypeAsInt => System.Convert.ToInt32(this.SdoGtype, CultureInfo.InvariantCulture);
 
         public int SdoSRIDAsInt
         {
-            get
-            {
-                return System.Convert.ToInt32(this.SdoSRID);
-            }
+            get => System.Convert.ToInt32(this.SdoSRID, CultureInfo.InvariantCulture);
 
-            set
-            {
-                this.SdoSRID = System.Convert.ToDecimal(value);
-            }
+            set => this.SdoSRID = System.Convert.ToDecimal(value, CultureInfo.InvariantCulture);
         }
 
-        public int[] ElemArrayOfInts
+        public int[]? ElemArrayOfInts
         {
             get
             {
@@ -53,9 +43,9 @@ namespace NetSdoGeometry
                 if (this.SdoElemInfo != null)
                 {
                     elems = new int[this.SdoElemInfo.Length];
-                    for (int k = 0; k < this.SdoElemInfo.Length; k++)
+                    for (var k = 0; k < this.SdoElemInfo.Length; k++)
                     {
-                        elems[k] = System.Convert.ToInt32(this.SdoElemInfo[k]);
+                        elems[k] = System.Convert.ToInt32(this.SdoElemInfo[k], CultureInfo.InvariantCulture);
                     }
                 }
 
@@ -66,12 +56,12 @@ namespace NetSdoGeometry
             {
                 if (value != null)
                 {
-                    int c = value.GetLength(0);
+                    var c = value.GetLength(0);
                     this.SdoElemInfo = new decimal[c];
 
-                    for (int k = 0; k < c; k++)
+                    for (var k = 0; k < c; k++)
                     {
-                        this.SdoElemInfo[k] = System.Convert.ToDecimal(value[k]);
+                        this.SdoElemInfo[k] = System.Convert.ToDecimal(value[k], CultureInfo.InvariantCulture);
                     }
                 }
                 else
@@ -91,7 +81,7 @@ namespace NetSdoGeometry
                     elems = new double[this.SdoOrdinates.Length];
                     for (int k = 0; k < this.SdoOrdinates.Length; k++)
                     {
-                        elems[k] = System.Convert.ToDouble(this.SdoOrdinates[k]);
+                        elems[k] = System.Convert.ToDouble(this.SdoOrdinates[k], CultureInfo.InvariantCulture);
                     }
                 }
 
@@ -102,11 +92,11 @@ namespace NetSdoGeometry
             {
                 if (value != null)
                 {
-                    int c = value.GetLength(0);
+                    var c = value.GetLength(0);
                     this.SdoOrdinates = new decimal[c];
                     for (int k = 0; k < c; k++)
                     {
-                        this.SdoOrdinates[k] = System.Convert.ToDecimal(value[k]);
+                        this.SdoOrdinates[k] = System.Convert.ToDecimal(value[k], CultureInfo.InvariantCulture);
                     }
                 }
                 else
@@ -126,75 +116,75 @@ namespace NetSdoGeometry
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("MDSYS.SDO_GEOMETRY(");
-                sb.Append((this.SdoGtype != null) ? this.SdoGtype.ToString() : "null");
-                sb.Append(",");
-                sb.Append((this.SdoSRID != null) ? this.SdoSRID.ToString() : "null");
-                sb.Append(",");
+                StringBuilder sb = new();
+                _ = sb.Append("MDSYS.SDO_GEOMETRY(");
+                _ = sb.Append(this.SdoGtype?.ToString(CultureInfo.InvariantCulture) ?? "null");
+                _ = sb.Append(',');
+                _ = sb.Append(this.SdoSRID?.ToString(CultureInfo.InvariantCulture) ?? "null");
+                _ = sb.Append(',');
 
                 // begin point
                 if (this.SdoPoint != null)
                 {
-                    sb.Append("MDSYS.SDO_POINT_TYPE(");
-                    sb.Append(string.Format(
+                    _ = sb.Append("MDSYS.SDO_POINT_TYPE(");
+                    _ = sb.Append(string.Format(CultureInfo.InvariantCulture,
                         "{0:#.##########},{1:#.##########}{2}{3:#.##########}",
                         this.SdoPoint.X,
                         this.SdoPoint.Y,
                         (this.SdoPoint.Z == null) ? null : ",",
                         this.SdoPoint.Z).Trim());
-                    sb.Append(")");
+                    _ = sb.Append(')');
                 }
                 else
                 {
-                    sb.Append("null");
+                    _ = sb.Append("null");
                 }
 
-                sb.Append(",");
+                _ = sb.Append(',');
 
                 // begin element array
                 if (this.SdoElemInfo != null)
                 {
-                    sb.Append("MDSYS.SDO_ELEM_INFO_ARRAY(");
+                    _ = sb.Append("MDSYS.SDO_ELEM_INFO_ARRAY(");
                     for (int i = 0; i < this.SdoElemInfo.Length; i++)
                     {
-                        sb.Append(string.Format("{0}", this.SdoElemInfo[i]));
+                        _ = sb.Append(string.Format(CultureInfo.InvariantCulture, "{0}", this.SdoElemInfo[i]));
                         if (i < (this.SdoElemInfo.Length - 1))
                         {
-                            sb.Append(",");
+                            _ = sb.Append(',');
                         }
                     }
 
-                    sb.Append(")");
+                    _ = sb.Append(')');
                 }
                 else
                 {
-                    sb.Append("null");
+                    _ = sb.Append("null");
                 }
 
-                sb.Append(",");
+                _ = sb.Append(',');
 
                 // begin ordinates array
                 if (this.SdoOrdinates != null)
                 {
-                    sb.Append("MDSYS.SDO_ORDINATE_ARRAY(");
-                    for (int i = 0; i < this.SdoOrdinates.Length; i++)
+                    _ = sb.Append("MDSYS.SDO_ORDINATE_ARRAY(");
+                    for (var i = 0; i < this.SdoOrdinates.Length; i++)
                     {
-                        sb.Append(string.Format("{0:#.##########}", this.SdoOrdinates[i]));
+                        _ = sb.Append(string.Format(CultureInfo.InvariantCulture, "{0:#.##########}", this.SdoOrdinates[i]));
                         if (i < (this.SdoOrdinates.Length - 1))
                         {
-                            sb.Append(",");
+                            _ = sb.Append(',');
                         }
                     }
 
-                    sb.Append(")");
+                    _ = sb.Append(')');
                 }
                 else
                 {
-                    sb.Append("null");
+                    _ = sb.Append("null");
                 }
 
-                sb.Append(')');
+                _ = sb.Append(')');
 
                 return sb.ToString();
             }
@@ -220,7 +210,7 @@ namespace NetSdoGeometry
 
         public int PropertiesFromGTYPE()
         {
-            if (this.SdoGtype != null && this.SdoGtype != 0)
+            if (this.SdoGtype is not null and not 0)
             {
                 int v = (int)this.SdoGtype.Value;
                 int dim = v / 1000;
@@ -240,11 +230,11 @@ namespace NetSdoGeometry
 
         public int PropertiesToGTYPE()
         {
-            int v = this.Dimensionality * 1000;
+            var v = this.Dimensionality * 1000;
             v = v + (this.LRS * 100);
             v = v + this.GeometryType;
 
-            this.SdoGtype = System.Convert.ToDecimal(v);
+            this.SdoGtype = System.Convert.ToDecimal(v, CultureInfo.InvariantCulture);
 
             return v;
         }

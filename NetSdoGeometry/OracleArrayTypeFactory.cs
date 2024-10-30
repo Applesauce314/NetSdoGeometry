@@ -1,8 +1,10 @@
+using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
+
+using System;
 
 namespace NetSdoGeometry
 {
-    using System;
 
     public abstract class OracleArrayTypeFactoryBase<T> : IOracleArrayTypeFactory
     {

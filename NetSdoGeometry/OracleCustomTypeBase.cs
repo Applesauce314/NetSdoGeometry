@@ -12,43 +12,42 @@ namespace NetSdoGeometry
     where T : OracleCustomTypeBase<T>, new()
     {
         private static string errorMessageHead = "Error converting Oracle User Defined Type to .Net Type " + typeof(T).ToString() + ", oracle column is null, failed to map to . NET valuetype, column ";
+
         [NonSerialized]
         private OracleConnection connection;
-        private IntPtr udtHandle;
+
+        private object? udtObject;
+
         private bool isNull;
 
         public static T Null
         {
             get
             {
-                T t = new T();
-                t.isNull = true;
+                T t = new T
+                {
+                    isNull = true
+                };
                 return t;
             }
         }
 
-        public virtual bool IsNull
-        {
-            get
-            {
-                return this.isNull;
-            }
-        }
+        public virtual bool IsNull => this.isNull;
 
         public IOracleCustomType CreateObject()
         {
             return new T();
         }
 
-        public void FromCustomObject(OracleConnection connection, IntPtr udtHandle)
+        public void FromCustomObject(OracleConnection connection, object udt)
         {
-            this.SetConnectionAndPointer(connection, udtHandle);
+            this.SetConnectionAndPointer(connection, udt);
             this.MapFromCustomObject();
         }
 
-        public void ToCustomObject(OracleConnection connection, IntPtr udtHandle)
+        public void ToCustomObject(OracleConnection connection, object udt)
         {
-            this.SetConnectionAndPointer(connection, udtHandle);
+            this.SetConnectionAndPointer(connection, udt);
             this.MapToCustomObject();
         }
 
@@ -56,17 +55,17 @@ namespace NetSdoGeometry
 
         public abstract void MapToCustomObject();
 
-        protected void SetConnectionAndPointer(OracleConnection connection, IntPtr udtHandle)
+        protected void SetConnectionAndPointer(OracleConnection connection, object udt)
         {
             this.connection = connection;
-            this.udtHandle = udtHandle;
+            this.udtObject = udt;
         }
 
         protected void SetValue(string oracleColumnName, object value)
         {
             if (value != null)
             {
-                OracleUdt.SetValue(this.connection, this.udtHandle, oracleColumnName, value);
+                OracleUdt.SetValue(this.connection, this.udtObject, oracleColumnName, value);
             }
         }
 
@@ -74,13 +73,13 @@ namespace NetSdoGeometry
         {
             if (value != null)
             {
-                OracleUdt.SetValue(this.connection, this.udtHandle, oracleColumnId, value);
+                OracleUdt.SetValue(this.connection, this.udtObject, oracleColumnId, value);
             }
         }
 
         protected U GetValue<U>(string oracleColumnName)
         {
-            if (OracleUdt.IsDBNull(this.connection, this.udtHandle, oracleColumnName))
+            if (OracleUdt.IsDBNull(this.connection, this.udtObject, oracleColumnName))
             {
                 if (default(U) is ValueType)
                 {
@@ -93,13 +92,13 @@ namespace NetSdoGeometry
             }
             else
             {
-                return (U)OracleUdt.GetValue(this.connection, this.udtHandle, oracleColumnName);
+                return (U)OracleUdt.GetValue(this.connection, this.udtObject, oracleColumnName);
             }
         }
 
         protected U GetValue<U>(int oracleColumnId)
         {
-            if (OracleUdt.IsDBNull(this.connection, this.udtHandle, oracleColumnId))
+            if (OracleUdt.IsDBNull(this.connection, this.udtObject, oracleColumnId))
             {
                 if (default(U) is ValueType)
                 {
@@ -112,7 +111,7 @@ namespace NetSdoGeometry
             }
             else
             {
-                return (U)OracleUdt.GetValue(this.connection, this.udtHandle, oracleColumnId);
+                return (U)OracleUdt.GetValue(this.connection, this.udtObject, oracleColumnId);
             }
         }
     }

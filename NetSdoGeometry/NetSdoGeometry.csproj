@@ -5,6 +5,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>NetSdoGeometry</RootNamespace>
     <AssemblyName>NetSdoGeometry</AssemblyName>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
 

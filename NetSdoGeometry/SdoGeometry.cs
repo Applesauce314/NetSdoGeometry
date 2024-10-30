@@ -16,13 +16,13 @@ namespace NetSdoGeometry
         public decimal? SdoSRID { get; set; }
 
         [OracleObjectMappingAttribute(2)]
-        public SdoPoint SdoPoint { get; set; }
+        public SdoPoint? SdoPoint { get; set; }
 
         [OracleObjectMappingAttribute(3)]
-        public decimal[] SdoElemInfo { get; set; }
+        public decimal[]? SdoElemInfo { get; set; }
 
         [OracleObjectMappingAttribute(4)]
-        public decimal[] SdoOrdinates { get; set; }
+        public decimal[]? SdoOrdinates { get; set; }
 
         public int SdoGtypeAsInt
         {
@@ -49,7 +49,7 @@ namespace NetSdoGeometry
         {
             get
             {
-                int[] elems = null;
+                int[]? elems = null;
                 if (this.SdoElemInfo != null)
                 {
                     elems = new int[this.SdoElemInfo.Length];
@@ -81,11 +81,11 @@ namespace NetSdoGeometry
             }
         }
 
-        public double[] OrdinatesArrayOfDoubles
+        public double[]? OrdinatesArrayOfDoubles
         {
             get
             {
-                double[] elems = null;
+                double[]? elems = null;
                 if (this.SdoOrdinates != null)
                 {
                     elems = new double[this.SdoOrdinates.Length];
@@ -194,7 +194,7 @@ namespace NetSdoGeometry
                     sb.Append("null");
                 }
 
-                sb.Append(")");
+                sb.Append(')');
 
                 return sb.ToString();
             }
@@ -220,9 +220,9 @@ namespace NetSdoGeometry
 
         public int PropertiesFromGTYPE()
         {
-            if ((int)this.SdoGtype != 0)
+            if (this.SdoGtype != null && this.SdoGtype != 0)
             {
-                int v = (int)this.SdoGtype;
+                int v = (int)this.SdoGtype.Value;
                 int dim = v / 1000;
                 this.Dimensionality = dim;
                 v -= dim * 1000;

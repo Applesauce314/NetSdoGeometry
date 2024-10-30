@@ -61,7 +61,7 @@ namespace NetSdoGeometry
             this.udtObject = udt;
         }
 
-        protected void SetValue(string oracleColumnName, object value)
+        protected void SetValue(string oracleColumnName, object? value)
         {
             if (value != null)
             {
@@ -69,7 +69,7 @@ namespace NetSdoGeometry
             }
         }
 
-        protected void SetValue(int oracleColumnId, object value)
+        protected void SetValue(int oracleColumnId, object? value)
         {
             if (value != null)
             {
@@ -77,7 +77,7 @@ namespace NetSdoGeometry
             }
         }
 
-        protected U GetValue<U>(string oracleColumnName)
+        protected U? GetValue<U>(string oracleColumnName)
         {
             if (OracleUdt.IsDBNull(this.connection, this.udtObject, oracleColumnName))
             {
@@ -87,7 +87,7 @@ namespace NetSdoGeometry
                 }
                 else
                 {
-                    return default(U);
+                    return default;
                 }
             }
             else
@@ -96,7 +96,7 @@ namespace NetSdoGeometry
             }
         }
 
-        protected U GetValue<U>(int oracleColumnId)
+        protected U? GetValue<U>(int oracleColumnId)
         {
             if (OracleUdt.IsDBNull(this.connection, this.udtObject, oracleColumnId))
             {
@@ -106,7 +106,7 @@ namespace NetSdoGeometry
                 }
                 else
                 {
-                    return default(U);
+                    return default;
                 }
             }
             else

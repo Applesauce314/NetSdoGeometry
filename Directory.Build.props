@@ -1,6 +1,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
+
+    <Configurations>Debug;Release</Configurations>
+    <LangVersion>latest</LangVersion>
     <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
   </PropertyGroup>
 
@@ -16,6 +19,40 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
   </PropertyGroup>
+  <ItemGroup>
 
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.Build.Tasks.Git" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <RepositoryUrl>https://github.com/Applesauce314/NetSdoGeometry</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <EmbedAllSources>true</EmbedAllSources>
+    <EmbedInteropTypes>false</EmbedInteropTypes>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+    <AnalysisMode>all</AnalysisMode>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <!--https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview#code-style-analysis-->
+    <AnalysisLevel>preview-all</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <!--<RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="RootNamespace" />
+    <CompilerVisibleProperty Include="ProjectDir" />
+  </ItemGroup>
 
 </Project>

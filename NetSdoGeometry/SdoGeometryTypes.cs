@@ -27,8 +27,10 @@ namespace NetSdoGeometry
             POLYGON_INTERIOR = 2005
         }
 
-        // Oracle Documentation for SDO_GTYPE.
-        // This represents the last two digits in a GTYPE, where the first item is dimension(ality) and the second is LRS
+        /// <summary>
+        /// Oracle Documentation for SDO_GTYPE.
+        /// This represents the last two digits in a GTYPE, where the first item is dimension(ality) and the second is LRS
+        /// </summary>
         public enum GTYPE
         {
             UNKNOWN_GEOMETRY = 00,

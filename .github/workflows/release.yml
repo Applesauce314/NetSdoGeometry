@@ -23,9 +23,11 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
     - name: Push
-      run: 
-        dotnet nuget push Applesauce314.NetSdoGeometry.${VERSION}.nupkg --source https://nuget.pkg.github.com/Applesauce314/index.json --api-key ${GITHUB_TOKEN}
-        dotnet nuget push Applesauce314.NetSdoGeometry.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGETORG_TOKEN}
+      run: dotnet nuget push Applesauce314.NetSdoGeometry.${VERSION}.nupkg --source https://nuget.pkg.github.com/Applesauce314/index.json --api-key ${GITHUB_TOKEN}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: PushNugetOrg
+      run: dotnet nuget push Applesauce314.NetSdoGeometry.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGETORG_TOKEN}
+      env:
+        
         NUGETORG_TOKEN: ${{ secrets.NUGETORG_TOKEN }}

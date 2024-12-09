@@ -106,10 +106,13 @@ namespace NetSdoGeometry
             }
         }
 
+        [Obsolete("this is going to be removed and refactored")]
         public int Dimensionality { get; set; }
 
+        [Obsolete("this is going to be removed and refactored")]
         public int LRS { get; set; }
 
+        [Obsolete("this is going to be removed and refactored")]
         public int GeometryType { get; set; }
 
         public string AsText
@@ -208,6 +211,8 @@ namespace NetSdoGeometry
             this.SdoOrdinates = this.GetValue<decimal[]>((int)OracleObjectColumns.SDO_ORDINATES);
         }
 
+
+        [Obsolete("this is going to be removed and refactored")]
         public int PropertiesFromGTYPE()
         {
             if (this.SdoGtype is not null and not 0)
@@ -228,6 +233,7 @@ namespace NetSdoGeometry
             }
         }
 
+        [Obsolete("this is going to be removed and refactored")]
         public int PropertiesToGTYPE()
         {
             var v = this.Dimensionality * 1000;

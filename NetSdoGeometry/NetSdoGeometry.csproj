@@ -6,6 +6,9 @@
     <RootNamespace>NetSdoGeometry</RootNamespace>
     <AssemblyName>NetSdoGeometry</AssemblyName>
     <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Applesauce314.$(AssemblyName)</PackageId>
     <Title>SDO Geometry User Defined Type for Oracle.ManagedDataAccess</Title>
@@ -13,8 +16,9 @@
     <Copyright>Copyright (c) 2016 Robert van Drunen</Copyright>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Applesauce314/NetSdoGeometry</RepositoryUrl>
   </PropertyGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.130" />

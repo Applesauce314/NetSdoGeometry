@@ -36,12 +36,12 @@ namespace NetSdoGeometry
             UNKNOWN_GEOMETRY = 00,
             POINT = 01,
             LINE = 02,
-            CURVE = 02,
+            CURVE = LINE,
             POLYGON = 03,
             COLLECTION = 04,
             MULTIPOINT = 05,
             MULTILINE = 06,
-            MULTICURVE = 06,
+            MULTICURVE = MULTILINE,
             MULTIPOLYGON = 07
         }
 
@@ -49,7 +49,7 @@ namespace NetSdoGeometry
         {
             DIM2D = 2,
             DIM3D = 3,
-            LRS_DIM3 = 3,
+            LRS_DIM3 = DIM3D,
             LRS_DIM4 = 4
         }
     }

@@ -7,7 +7,7 @@
     <AssemblyName>NetSdoGeometry</AssemblyName>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>APMoskevitz.$(AssemblyName)</PackageId>
+    <PackageId>Applesauce314.$(AssemblyName)</PackageId>
     <Title>SDO Geometry User Defined Type for Oracle.ManagedDataAccess</Title>
     <Description>SDO Geometry User Defined Type for Oracle.ManagedDataAccess</Description>
     <Copyright>Copyright (c) 2016 Robert van Drunen</Copyright>
